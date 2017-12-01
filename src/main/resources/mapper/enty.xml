@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.recu.dao.zcer">
+    <select id="selee" resultType="com.example.demo.recu.enty.enty" parameterType="java.lang.String">
+        select * from recursion
+    </select>
+    <!--查询所有，使用resultMap返回结果集，将数据组装成树形结构  -->
+    <select id="findDatacleanAll" resultMap="dataclean_map">
+        select * from recursion m where m.father = #{name}
+    </select>
+    <!-- 返回结果集 -->
+    <resultMap id="dataclean_map" type="com.example.demo.recu.enty.enty">
+        <id column="m.son" property="son"/>
+        <result column="m.father" property="father"/>
+        <collection property="childList" column="son" ofType="com.example.demo.recu.enty.enty" select="findDatacleanByparentId"></collection>
+    </resultMap>
+    <!-- 根据父键查询 -->
+    <select id="findDatacleanByparentId" parameterType="String" resultMap="dataclean_map">
+        select * from recursion m where m.father = #{son}
+    </select>
+</mapper>

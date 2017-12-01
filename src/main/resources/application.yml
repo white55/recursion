@@ -1,0 +1,9 @@
+mybatis:
+  type-aliases-package: com.example.demo.recu.enty
+  mapper-locations: classpath:mapper/*.xml
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/installdb
+    username: root
+    password: admin
+    driver-class-name: com.mysql.jdbc.Driver
